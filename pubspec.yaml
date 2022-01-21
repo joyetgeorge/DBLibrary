@@ -46,6 +46,7 @@ dependencies:
   flutter_neumorphic: ^3.2.0
   fluttertoast: ^8.0.8
   flat_icons_flutter: ^1.0.2
+  flutter_local_notifications: ^9.2.0
 
 dev_dependencies:
   flutter_test:

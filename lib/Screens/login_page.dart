@@ -18,7 +18,7 @@ class _LogInPageState extends State<LogInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,10 @@ class _LogInPageState extends State<LogInPage> {
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width / 3,
                             child: NeumorphicButton(
-                              onPressed: () {},
+                              onPressed: () => signIn(
+                                emailController.text,
+                                passwordController.text,
+                              ),
                               child: Center(
                                 child: Text(
                                   "LOG IN",
@@ -153,16 +156,16 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
-//   void signIn(String email, String password) async {
-//     await _auth
-//         .signInWithEmailAndPassword(email: email, password: password)
-//         .then((uid) => {
-//               Fluttertoast.showToast(msg: "login successful"),
-//               Navigator.of(context).pushReplacement(
-//                   MaterialPageRoute(builder: (context) => HomeScreen()))
-//             })
-//         .catchError((e) {
-//       Fluttertoast.showToast(msg: e.toString());
-//     });
-//   }
+  void signIn(String email, String password) async {
+    await _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((uid) => {
+              Fluttertoast.showToast(msg: "login successful"),
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => HomeScreen()),(route) => false)
+            })
+        .catchError((e) {
+      Fluttertoast.showToast(msg: e.message());
+    });
+  }
 }

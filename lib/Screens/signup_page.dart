@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dblibrary/Screens/home.dart';
 import 'package:dblibrary/Screens/login_page.dart';
+import 'package:dblibrary/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,6 +17,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final _auth = FirebaseAuth.instance;
+
   final _fromkey = GlobalKey<FormState>();
 
   final TextEditingController nameController = TextEditingController();
@@ -140,10 +146,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width / 2,
                             child: NeumorphicButton(
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen())),
+                              onPressed: () => signUp(emailController.text,
+                                  passwordController.text),
                               child: Center(
                                 child: Text(
                                   "Create Account",
@@ -187,5 +191,37 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  void signUp(String email, String password) async {
+    await _auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) => {postDetailsToFirestore()})
+        .catchError((e) {
+      Fluttertoast.showToast(msg: e!.message);
+    });
+  }
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.name = nameController.text;
+    userModel.uid = user.uid;
+
+    await firebaseFirestore
+        .collection('users')
+        .doc(user.uid)
+        .set(userModel.toMap());
+
+    Fluttertoast.showToast(msg: "Account created");
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false);
   }
 }
