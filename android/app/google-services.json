@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "281673459436",
+    "project_id": "dblibrary-19c0a",
+    "storage_bucket": "dblibrary-19c0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281673459436:android:590ae389d40360b858a7c9",
+        "android_client_info": {
+          "package_name": "com.example.dblibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281673459436-r9q33t5kfvdsguo6i072cosbcbfb4d9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABKCLzYNe3RKv9Z7VUkBZbWq2sZQ1yCq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281673459436-r9q33t5kfvdsguo6i072cosbcbfb4d9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
