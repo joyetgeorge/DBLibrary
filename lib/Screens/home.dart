@@ -15,12 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Column(
-          children: [
-            
-            
-          ],
-        ),
       ),
       bottomNavigationBar: Navbar(),
     );
